@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  fpm:
+    build: docker/fpm
+    restart: unless-stopped
+    volumes:
+      - ${PWD}:/var/www/laravel
+    networks:
+      - my-laravel
+
+  nginx:
+    build: docker/nginx
+    restart: unless-stopped
+    volumes:
+      - ${PWD}:/var/www/laravel
+    ports:
+      - 8880:80
+    depends_on:
+      - fpm
+    networks:
+      - my-laravel
+  
+  db:
+    build: docker/mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+    volumes:
+      - ./docker/mysql:/mysql
+    networks:
+      - my-laravel
+
+
+networks:
+  my-laravel:
+    driver: bridge
