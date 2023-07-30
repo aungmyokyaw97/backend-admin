@@ -23,8 +23,8 @@ class UserSeeder extends Seeder
         ]);
 
         $staff = Staff::create([
-            'name' => 'amk',
-            'email' => 'amk@gmail.com',
+            'name' => 'rootadmin',
+            'email' => 'rootadmin@gmail.com',
             'join_date' => Carbon::now(),
             'department_id' => $department->id,
             'gender' => 'Male',
@@ -34,8 +34,8 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'amk',
-            'email' => 'amk@gmail.com',            
+            'name' => 'rootadmin',
+            'email' => 'rootadmin@gmail.com',            
             'is_super' => 1,
             'password' => Hash::make(123456),
             'staff_id' => $staff->id
